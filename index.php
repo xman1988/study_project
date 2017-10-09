@@ -6,10 +6,11 @@ databaseConnect($config);
 setHit();
 $counterData = getCounterData(); 
 if($counterData) {
-	echo array_pop($counterData[0]); 
+	require_once "stats.php";
 }
 else {
 	echo '<br>Ошибка приема данных из БД!';
 	mysqli_close($link);
+
 }
 ?>

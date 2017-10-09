@@ -15,7 +15,8 @@ function databaseInsert($sqlInsert) {
     }
 }
 function databaseShowError() {
+    global $link;
 	echo "Ошибка! Невозможно подключиться к базе данных: ".PHP_EOL;
-	echo "Номер ошибки:".mysqli_connect_errno().PHP_EOL;
+	echo "Номер ошибки:".mysqli_error($link).PHP_EOL;
 }
 ?>
