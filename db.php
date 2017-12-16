@@ -1,24 +1,25 @@
 <?php
-require_once 'config.php';
+
 
 class dataBase{
-    private $link;
+    protected $link;
     public $result;
     public $fetchedData;
     public $data;
 
-    function __construct($config) {
-        $this->link = mysqli_connect($config["host"], $config["user"], $config["pass"], $config["database"]);
+    function dbConnect($config) {
+        $this->link = new mysqli($config["host"], $config["user"], $config["pass"], $config["database"]);
         if(!$this->link) {
-            return false;
+        printf("Не удалось подключиться: %s\n", $this->link->connect_error);
+        return false;
         }
         return $this->link;
     }
 
     public function dbInsert($sqlInsert) {
-        $this->result = mysqli::query($sqlInsert);
+        $this->link->query($sqlInsert);
         if(!$this->result) {
-            printf("Сообщение об ошибке: %s\n". mysqli::error);
+           echo("Сообщение об ошибке: %s\n". $this->link->error);
             return false;
         }
     }
