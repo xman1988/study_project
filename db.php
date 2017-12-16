@@ -1,22 +1,40 @@
 <?php
-function databaseConnect($config) {
-	global $link;
-	$link = mysqli_connect($config['host'], $config['user'], $config['pass'], $config['database']);
-    if(!$link) {
-        return false;
+require_once 'config.php';
+
+class dataBase{
+    private $link;
+
+    function __construct($config){
+        $this->link = mysqli_connect($config["host"], $config["user"], $config["pass"], $config["database"]);
+        if(!$this->link) {
+            return false;
+        }
+        return $this->link;
     }
-}
-function databaseInsert($sqlInsert) {
-	global $link;
-	$result = mysqli_query($link, $sqlInsert);
-    if(!$result) {
-    	printf("Сообщение об ошибке: %s\n", mysqli_error($link));
-    	return false;
+
+    public function dbInsert($sqlInsert) {
+        $result = $mysqli->query($sqlInsert);
+        if(!$result) {
+            printf("Сообщение об ошибке: %s\n". $mysqli->error);
+            return false;
+        }
     }
-}
-function databaseShowError() {
-    global $link;
-	echo "Ошибка! Невозможно подключиться к базе данных: ".PHP_EOL;
-	echo "Номер ошибки:".mysqli_error($link).PHP_EOL;
+
+    public function dbShowError() {
+        echo "Ошибка! Невозможно подключиться к базе данных: ".PHP_EOL;
+    }
+
+    public function dbSelectToArray($result) {
+        if(!$result) {
+           $this->databaseShowError();
+           return false;
+        }
+        else {
+            while($fetchedData = mysqli_fetch_assoc($result)) {
+               $data[] = $fetchedData; 
+            }
+            return $data;
+        }       
+    }
 }
 ?>
