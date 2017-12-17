@@ -2,18 +2,19 @@
 
 
 class dataBase{
-    protected $link;
+    protected $_link;
     public $result;
     public $fetchedData;
     public $data;
 
-    function dbConnect($config) {
-        $this->link = new mysqli($config["host"], $config["user"], $config["pass"], $config["database"]);
-        if(!$this->link) {
-        printf("Не удалось подключиться: %s\n", $this->link->connect_error);
-        return false;
+    function __construct() {
+        require_once 'config.php';
+        $this->_link = new mysqli($config["host"], $config["user"], $config["pass"], $config["database"]);
+        if(!$this->_link){
+            echo "Не удалось подключиться к БД" . $this->_link->error;
+            return false;
         }
-        return $this->link;
+        return $this->_link;
     }
 
     public function dbInsert($sqlInsert) {
