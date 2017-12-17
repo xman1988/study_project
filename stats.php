@@ -1,5 +1,5 @@
 <?php
-	class stats{
+	class Stats{
 
 		// public $show1 = array_pop($counterData[0][0]);
 		// public $show2 = array_pop($counterData[1][0]);
