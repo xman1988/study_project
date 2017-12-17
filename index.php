@@ -11,10 +11,10 @@ $counter->getCounterData();
 
 if($counter->getCounterData()) {
 	$showStats = new stats();
-	$showStats->showStats();
+	$showStats->showStats(); // принимает $result, который ты не передаешь
 }
 else {
-	echo '<br>Ошибка приема данных из БД!';
-	mysqli::close();
+	echo '<br>Ошибка приема данных из БД!'; 
+	mysqli::close(); //не оязательно
 }
 ?>
