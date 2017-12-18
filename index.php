@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once "config.php";
 require_once 'db.php' ;
 require_once 'counter.php';
 require_once 'stats.php';
@@ -8,6 +8,7 @@ $db = new DataBase($config);
 $counter = new Counter();
 $counter->setHit($db);
 $counter->getCounterData($db);
+
 
 //if($counter->getCounterData()) {
 //	$ShowStats = new stats();
