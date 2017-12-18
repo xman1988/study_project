@@ -1,7 +1,7 @@
 <?php
 class Counter{
 
-       public function setHit($db){
+    public function setHit($db){
     $ip = $_SERVER['REMOTE_ADDR'];
     $visit_time = time();
     $current_id = $db->insert_id;
@@ -23,24 +23,24 @@ class Counter{
     $sql = "SELECT COUNT(ip) FROM `hits`
     INNER JOIN `ip`
     ON `hits`.`ip_id` = `ip`.`id`";
-    $db->query($sql);
-    $result[]= $db->dbSelectToArray($db->query);
+    $db->link->query($sql);
+    $result[]= $db->dbSelectToArray($db->link->query);
 
     $sql = "SELECT COUNT(*) FROM ip WHERE ip = $ip";
-    $db->query($sql);
-    $result[]= $db->dbSelectToArray($db->query);
+    $db->link->query($sql);
+    $result[]= $db->dbSelectToArray($db->link->query);
 
     $sql = "SELECT COUNT(*) FROM ip WHERE ip = $ip_my";
-    $db->query($sql);
-    $result[]= $db->dbSelectToArray($db->query);
+    $db->link->query($sql);
+    $result[]= $db->dbSelectToArray($db->link->query);
 
     $sql = "SELECT COUNT(DISTINCT ip) FROM ip";
-    $db->query($sql);
-    $result[]= $db->dbSelectToArray($db->query);
+    $db->link->query($sql);
+    $result[]= $db->dbSelectToArray($db->link->query);
 
     $sql = "SELECT DISTINCT ip, COUNT(*) FROM ip GROUP BY ip";
-    $db->query($sql);
-    $result[]= $db->dbSelectToArray($db->query);
+    $db->link->query($sql);
+    $result[]= $db->dbSelectToArray($db->link->query);
 
     return $result;
     }

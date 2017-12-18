@@ -1,6 +1,7 @@
 <?php
+
 class DataBase {
-    protected $link;
+    public $link;
     public $result;
     public $data;
 
