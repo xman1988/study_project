@@ -8,6 +8,7 @@ $db = new DataBase($config);
 $counter = new Counter();
 $counter->setHit($db);
 $counter->getCounterData($db);
+$db->dbSelectToArray($db,$counter);
 
 
 //if($counter->getCounterData()) {

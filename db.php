@@ -26,14 +26,14 @@ class DataBase {
         echo "Ошибка! Невозможно подключиться к базе данных: ". $this->link->error;
     }
 
-    public function dbSelectToArray($result) {
+    public function dbSelectToArray($db,$counter) {
         $this->data = [];
-        if (!$result) {
+        if (!$counter) {
            $this->dbShowError();
            return false;
         }
         else {
-            while ($fetchedData = $result->fetch_assoc($result)) {
+            while ($fetchedData = $db->link->query->fetch_assoc($counter->getCounterData)) {
                $this->data[] = $fetchedData;
             }
             return $this->data;
