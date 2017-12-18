@@ -1,51 +1,48 @@
 <?php
-class Сounter{
-    public $ip;
-    public $ip_my;
+class Counter{
 
-    public function setHit($db) {
-        $this->ip = $_SERVER['REMOTE_ADDR'];
-        $visit_time = time();
-        $ip_id = $db->insert_id;
-        if($this->ip) {
-            $sqlInsert = "INSERT INTO ip(ip) VALUES ($this->ip)";
-            $db->dbInsert($sqlInsert);
-            $sqlInsert = "INSERT INTO hits(ip_id, visit_time) VALUES ($ip_id, $visit_time)";
-            $db->dbInsert($sqlInsert);
+       public function setHit($db){
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $visit_time = time();
+    $current_id = $db->insert_id;
+        if ($ip){
+            $sql = "INSERT INTO ip(ip) VALUES ('$ip')";
+            $db->dbInsert($sql);
+            $sql = "INSERT INTO hits(ip_id, visit_time) VALUES ($current_id, $visit_time)";
+            $db->dbInsert($sql);
         }
         else {
             echo "Ваш ip не опознан!";
             return false;
         }
-
     }
 
     public function getCounterData($db) {
-        $this->ip = $_SERVER['REMOTE_ADDR'];
-        $this->ip_my = $_SERVER['SERVER_ADDR'];
-        $sqlSelect = "SELECT COUNT(ip) FROM `hits`
-	    	    INNER JOIN `ip`
-	    	    ON `hits`.`ip_id` = `ip`.`id`";
-        $db->query($sqlSelect);
-        $result[]= $db->dbSelectToArray($db->query);
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $ip_my = $_SERVER['SERVER_ADDR'];
+    $sql = "SELECT COUNT(ip) FROM `hits`
+    INNER JOIN `ip`
+    ON `hits`.`ip_id` = `ip`.`id`";
+    $db->query($sql);
+    $result[]= $db->dbSelectToArray($db->query);
 
-        $sqlSelect = "SELECT COUNT(*) FROM ip WHERE ip = $this->ip";
-        $db->query($sqlSelect);
-        $result[]= $db->dbSelectToArray($db->query);
+    $sql = "SELECT COUNT(*) FROM ip WHERE ip = $ip";
+    $db->query($sql);
+    $result[]= $db->dbSelectToArray($db->query);
 
-        $sqlSelect = "SELECT COUNT(*) FROM ip WHERE ip= $this->ip_my";
-        $db->query($sqlSelect);
-        $result[]= $db->dbSelectToArray($db->query);
+    $sql = "SELECT COUNT(*) FROM ip WHERE ip = $ip_my";
+    $db->query($sql);
+    $result[]= $db->dbSelectToArray($db->query);
 
-        $sqlSelect = "SELECT COUNT(DISTINCT ip) FROM ip";
-        $db->query($sqlSelect);
-        $result[]= $db->dbSelectToArray($db->query);
+    $sql = "SELECT COUNT(DISTINCT ip) FROM ip";
+    $db->query($sql);
+    $result[]= $db->dbSelectToArray($db->query);
 
-        $sqlSelect = "SELECT DISTINCT ip, COUNT(*) FROM ip GROUP BY ip";
-        $db->query($sqlSelect);
-        $result[]= $db->dbSelectToArray($db->query);
+    $sql = "SELECT DISTINCT ip, COUNT(*) FROM ip GROUP BY ip";
+    $db->query($sql);
+    $result[]= $db->dbSelectToArray($db->query);
 
-        return $result;
+    return $result;
     }
 }
 ?>

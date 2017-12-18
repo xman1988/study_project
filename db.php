@@ -15,8 +15,8 @@ class DataBase {
 
     public function dbInsert($sqlInsert) {
         $this->link->query($sqlInsert);
-        if (!$this->result) {
-           echo("Сообщение об ошибке: %s\n". $this->link->error);
+        if (!$this->link->query($sqlInsert)) {
+           echo("Сообщение об ошибке:". $this->link->error);
             return false;
         }
     }
