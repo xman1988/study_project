@@ -5,10 +5,10 @@ require_once 'counter.php';
 require_once 'stats.php';
 
 $db = new DataBase($config);
-$counter = new Counter();
-$counter->setHit($db);
-$counter->getCounterData($db);
-$db->dbSelectToArray($db,$counter);
+$counter = new Counter($db);
+$counter->setHit();
+$counter->getCounterData();
+
 
 
 //if($counter->getCounterData()) {

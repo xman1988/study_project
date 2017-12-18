@@ -1,43 +1,33 @@
 <?php
-
 class DataBase {
+    
     public $link;
-    public $result;
-    public $data;
-
+    public $data =[];
     function __construct($config) {
         $this->link = new mysqli($config["host"], $config["user"], $config["pass"], $config["database"]);
         if (!$this->link){
-            echo "Не удалось подключиться к БД" . $this->link->error;
+            $this->dbShowError();
             return false;
         }
         return $this->link;
     }
 
-    public function dbInsert($sqlInsert) {
-        $this->link->query($sqlInsert);
-        if (!$this->link->query($sqlInsert)) {
-           echo("Сообщение об ошибке:". $this->link->error);
-            return false;
-        }
-    }
-
     public function dbShowError() {
-        echo "Ошибка! Невозможно подключиться к базе данных: ". $this->link->error;
+        echo "Ошибка! Невозможно подключиться к базе данных:</br>". $this->link->error . "<br />";
     }
 
-    public function dbSelectToArray($db,$counter) {
-        $this->data = [];
-        if (!$counter) {
-           $this->dbShowError();
-           return false;
+    public function dbSelectToArray($resultFromDB){
+        if ($resultFromDB) {
+            while ($rowFetchedData = $resultFromDB->fetch_assoc()) {
+                $this->data = $rowFetchedData;
+            }
         }
         else {
-            while ($fetchedData = $db->link->query->fetch_assoc($counter->getCounterData)) {
-               $this->data[] = $fetchedData;
-            }
+            echo "Ошибка метода dbSelectToArray! Не передан результирующий массив данных их БД:</br>". $this->link->error . "<br />";
+             return false;
+        }
             return $this->data;
-        }       
+
     }
 }
 ?>

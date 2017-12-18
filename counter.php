@@ -1,15 +1,21 @@
 <?php
-class Counter{
 
-    public function setHit($db){
-    $ip = $_SERVER['REMOTE_ADDR'];
-    $visit_time = time();
-    $current_id = $db->insert_id;
+class Counter{
+    public $db;
+
+    function __construct($databaseobj){
+        $this->db = $databaseobj;
+}
+
+    public function setHit(){
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $visit_time = time();
+        $current_id = $this->db->link->insert_id;
         if ($ip){
             $sql = "INSERT INTO ip(ip) VALUES ('$ip')";
-            $db->dbInsert($sql);
+            $this->db->link->query($sql);
             $sql = "INSERT INTO hits(ip_id, visit_time) VALUES ($current_id, $visit_time)";
-            $db->dbInsert($sql);
+            $this->db->link->query($sql);
         }
         else {
             echo "Ваш ip не опознан!";
@@ -17,32 +23,27 @@ class Counter{
         }
     }
 
-    public function getCounterData($db) {
-    $ip = $_SERVER['REMOTE_ADDR'];
-    $ip_my = $_SERVER['SERVER_ADDR'];
-    $sql = "SELECT COUNT(ip) FROM `hits`
+    public function getCounterData() {
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip_my = $_SERVER['SERVER_ADDR'];
+        $sql = "SELECT COUNT(ip) FROM `hits`
     INNER JOIN `ip`
     ON `hits`.`ip_id` = `ip`.`id`";
-    $db->link->query($sql);
-    $result[]= $db->dbSelectToArray($db->link->query);
+        $result[]= $this->db->dbSelectToArray($this->db->link->query($sql));
 
-    $sql = "SELECT COUNT(*) FROM ip WHERE ip = $ip";
-    $db->link->query($sql);
-    $result[]= $db->dbSelectToArray($db->link->query);
+        $sql = "SELECT COUNT(*) FROM ip WHERE ip = $ip";
+        $result[]= $this->db->dbSelectToArray($this->db->link->query($sql));
 
-    $sql = "SELECT COUNT(*) FROM ip WHERE ip = $ip_my";
-    $db->link->query($sql);
-    $result[]= $db->dbSelectToArray($db->link->query);
+        $sql = "SELECT COUNT(*) FROM ip WHERE ip = $ip_my";
+        $result[]= $this->db->dbSelectToArray($this->db->link->query($sql));
 
-    $sql = "SELECT COUNT(DISTINCT ip) FROM ip";
-    $db->link->query($sql);
-    $result[]= $db->dbSelectToArray($db->link->query);
+        $sql = "SELECT COUNT(DISTINCT ip) FROM ip";
+        $result[]= $this->db->dbSelectToArray($this->db->link->query($sql));
 
-    $sql = "SELECT DISTINCT ip, COUNT(*) FROM ip GROUP BY ip";
-    $db->link->query($sql);
-    $result[]= $db->dbSelectToArray($db->link->query);
+        $sql = "SELECT DISTINCT ip, COUNT(*) FROM ip GROUP BY ip";
+        $result[]= $this->db->dbSelectToArray($this->db->link->query($sql));
 
-    return $result;
+        return $result;
     }
 }
 ?>
