@@ -1,5 +1,4 @@
 <?php
-
 class Counter{
     public $db;
 
@@ -31,10 +30,10 @@ class Counter{
     ON `hits`.`ip_id` = `ip`.`id`";
         $result[]= $this->db->dbSelectToArray($this->db->link->query($sql));
 
-        $sql = "SELECT COUNT(*) FROM ip WHERE ip = $ip";
+        $sql = "SELECT COUNT(*) FROM ip WHERE ip = '$ip'";
         $result[]= $this->db->dbSelectToArray($this->db->link->query($sql));
 
-        $sql = "SELECT COUNT(*) FROM ip WHERE ip = $ip_my";
+        $sql = "SELECT COUNT(*) FROM ip WHERE ip = '$ip_my'";
         $result[]= $this->db->dbSelectToArray($this->db->link->query($sql));
 
         $sql = "SELECT COUNT(DISTINCT ip) FROM ip";

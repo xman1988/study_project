@@ -7,7 +7,7 @@ require_once 'stats.php';
 $db = new DataBase($config);
 $counter = new Counter($db);
 $counter->setHit();
-$counter->getCounterData();
+var_dump ($counter->getCounterData());
 
 
 

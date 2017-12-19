@@ -1,6 +1,5 @@
 <?php
 class DataBase {
-    
     public $link;
     public $data =[];
     function __construct($config) {
