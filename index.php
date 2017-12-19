@@ -5,9 +5,11 @@ require_once 'counter.php';
 require_once 'stats.php';
 
 $db = new DataBase($config);
+//var_dump($db);
 $counter = new Counter($db);
 $counter->setHit();
-var_dump ($counter->getCounterData());
+$counter->getCounterData();
+//var_dump ($counter->getCounterData());
 
 
 
