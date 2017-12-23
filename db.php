@@ -24,11 +24,6 @@ class DataBase {
     }
 
 
-    public function dbShowError() {
-        echo "Ошибка! Невозможно подключиться к базе данных:</br>". $this->link->error . "<br />";
-    }
-
-
     public function dbSelectToArray($resultFromDB){
         if ($resultFromDB) {
             while ($rowFetchedData = $resultFromDB->fetch_assoc()) {
@@ -43,6 +38,10 @@ class DataBase {
 
     }
 
+
+    public function dbShowError() {
+        echo "Ошибка! Невозможно подключиться к базе данных:</br>". $this->link->error . "<br />";
+    }
 
 }
 ?>

@@ -9,15 +9,9 @@ $db = new DataBase($config);
 $counter = new Counter($db);
 $counter->setHit();
 $counter->getCounterData();
-//var_dump ($counter->getCounterData());
+$result = $counter->getCounterData();
+//var_dump($result = $counter->getCounterData());
+$showStats = new Stats($result);
+$showStats ->show();
 
-
-
-//if($counter->getCounterData()) {
-//	$ShowStats = new stats();
-//	$ShowStats->ShowStats();
-//}
-//else {
-//	echo '<br>Ошибка приема данных из БД!';
-//}
 ?>

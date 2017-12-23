@@ -3,8 +3,8 @@ class Counter{
     public $db;
     public $sql;
 
-    function __construct($databaseobj){
-        $this->db = $databaseobj;
+    function __construct($databaseObj){
+        $this->db = $databaseObj;
     }
 
     public function setHit(){
@@ -28,8 +28,8 @@ class Counter{
         $ip_my = $_SERVER['SERVER_ADDR'];
 
         $this->sql = "SELECT COUNT(ip) FROM `hits`
-                      INNER JOIN `ip`
-                      ON `hits`.`ip_id` = `ip`.`id`";
+                      INNER JOIN `ip` ON `hits`.
+                      `ip_id` = `ip`.`id`";
         //echo "<br><br>" . $this->sql;
         $result[]= $this->db->dbSelectToArray($this->db->getQuery($this->sql));
 
