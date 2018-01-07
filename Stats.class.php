@@ -18,13 +18,14 @@ class Stats{
                        <td >Хиты</td>
                    </tr>";
 
-        foreach($this->array[4] as $inArray ) {
-            foreach($inArray as $key=>$value) {
+        foreach($this->array[4] as $keys ) {
+            foreach($keys as $items){
                 echo "
                     <tr>
-                       <td >" .$inArray['host'] . "</td>
-                       <td >" .$inArray['hits'] . "</td>
+                       <td >". $keys['host'] ." </td>
+                       <td >". $keys['hits'] ."</td>
                     </tr>";
+                break;
             }
         }
      }
