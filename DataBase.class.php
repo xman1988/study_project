@@ -17,14 +17,19 @@ class DataBase {
     public function select($sql){
         if($sql){
             $result = $this->link->query($sql);
-            if($result === false){
+            if(is_object($result)){
+                return $result;
+            }
+            else{
+                echo "В запросе <br>".$sql."<br> вернулся: ";
+                var_dump($result);
                 $errorMessage = "Select не выполнен";
                 $this->dbShowError($errorMessage);
+
             }
-            return $result;
         }
         else{
-            $errorMessage = "Не передан запрос к БД";
+            $errorMessage = "Ошибка - Текст запроса не передан!";
             $this->dbShowError($errorMessage);
         }
     }
@@ -32,27 +37,15 @@ class DataBase {
     public function insert($sql){
         if($sql){
             $result = $this->link->query($sql);
-            if($result === false){
+            if(!$result){
+                echo "В запросе <br>".$sql."<br> вернулся: ";// Почему возвращает null, когда должен в случае неудачи возвращать false?
+                var_dump($result);
                 $errorMessage = "Insert не выполнен";
                 $this->dbShowError($errorMessage);
             }
         }
         else{
-            $errorMessage = "Не передан запрос к БД";
-            $this->dbShowError($errorMessage);
-        }
-    }
-
-    public function update($sql){
-        if($sql){
-            $result = $this->link->query($sql);
-            if($result === false){
-                $errorMessage = "Update не выполнен";
-                $this->dbShowError($errorMessage);
-            }
-        }
-        else{
-            $errorMessage = "Не передан запрос к БД";
+            $errorMessage = "Ошибка - Текст запроса не передан!";
             $this->dbShowError($errorMessage);
         }
     }
@@ -63,17 +56,12 @@ class DataBase {
     }
 
     public function dbSelectToArray(mysqli_result $resultFromDB){
-        if ($resultFromDB){
-            while ($rowFetchedData = $resultFromDB->fetch_assoc()) {
-                $this->data = [];
-                $this->data = $rowFetchedData;
-            }
-            return $this->data;
+        $this->data = [];
+        while ($rowFetchedData = $resultFromDB->fetch_assoc()) {
+            $this->data[] = $rowFetchedData;
         }
-        else {
-            $errorMessage = "Не пришел ответ из БД";
-            $this->dbShowError($errorMessage);
-        }
+
+        return $this->data;
     }
 
     public function dbSelectToSimpleArray(mysqli_result $resultFromDB){
