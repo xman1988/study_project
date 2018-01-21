@@ -1,11 +1,28 @@
 <?php
-class Stats{
+
+/**
+ * Class Stats Класс вывода результата выборки из БД на экран
+ */
+class Stats {
+
+    /**
+     * @var array $array Массив данных для вывода на экран
+     */
     public $array;
-    function __construct(array $result){
+
+    /**
+     * Stats constructor. Принимает массив данных
+     *
+     * @param array $result Принимаемый массив данных для вывода на экран
+     */
+    public function __construct(array $result) {
         $this->array = $result;
     }
 
-     function show(){
+    /**
+     * Метод выводит данные из массива на экран
+     */
+     public function show() {
         echo "
            <br>Количество всех проверенных хитов:  {$this->array[0]["allRightHits"]}
            <br>Количество хитов клиента:  {$this->array[1]["clientIp"]}
@@ -18,15 +35,12 @@ class Stats{
                        <td >Хиты</td>
                    </tr>";
 
-        foreach($this->array[4] as $keys ) {
-            foreach($keys as $items){
+        foreach ($this->array[4] as $keys) {
                 echo "
                     <tr>
                        <td >". $keys['host'] ." </td>
                        <td >". $keys['hits'] ."</td>
                     </tr>";
-                break;
-            }
         }
      }
 }
