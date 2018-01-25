@@ -14,7 +14,7 @@ class Counter {
      * @var string $ip Принимает значение ip клиента
      */
     public $ip;
-    
+
     /**
      * Counter constructor.
      * @param DataBase $databaseObj Принимает экземпляр класса DataBase с объектом класса mysqli подключения к БД
